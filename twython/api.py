@@ -31,7 +31,7 @@ class Twython(EndpointsMixin, object):
     def __init__(self, app_key=None, app_secret=None, oauth_token=None,
                  oauth_token_secret=None, access_token=None,
                  token_type='bearer', oauth_version=1, api_version='1.1',
-                 client_args=None, auth_endpoint='authenticate'):
+                 client_args=None, auth_endpoint='authenticate', api_url=None):
         """Instantiates an instance of Twython. Takes optional parameters for
         authentication and such (see below).
 
@@ -65,7 +65,7 @@ class Twython(EndpointsMixin, object):
         # API urls, OAuth urls and API version; needed for hitting that there
         # API.
         self.api_version = api_version
-        self.api_url = 'https://api.twitter.com/%s'
+        self.api_url = None or 'https://api.twitter.com/%s'
 
         self.app_key = app_key
         self.app_secret = app_secret
@@ -106,7 +106,7 @@ class Twython(EndpointsMixin, object):
             # User Authentication is through OAuth 1
             if self.app_key is not None and self.app_secret is not None:
                 auth = OAuth1(self.app_key, self.app_secret,
-                                self.oauth_token, self.oauth_token_secret)
+                              self.oauth_token, self.oauth_token_secret)
 
         elif oauth_version == 2 and self.access_token:
             # Application Authentication is through OAuth 2
